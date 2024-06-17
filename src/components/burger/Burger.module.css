@@ -1,0 +1,50 @@
+.burger {
+	display: block;
+	
+	--width: 35px;
+	--height: 35px;
+	
+	width: var(--width);
+	height: var(--height);
+	
+	padding: calc(var(--height) / 7) 0;
+	
+	cursor: pointer;
+}
+
+.bar {
+	display: block;
+	
+	--width: 35px;
+	--height: 35px;
+	--color: #fff;
+	--border-radius: 5px;
+	
+	width: var(--width);
+	height: calc(var(--height) / 7);
+	
+	background-color: var(--color);
+	border-radius: var(--border-radius);
+	
+	transition: 0.4s;
+}
+
+.bar:nth-child(2) {
+	margin: calc(var(--height) / 7) 0;
+}
+
+.bar:nth-child(1).barActive {
+	transform:
+		translateY(calc(var(--height) / 7 * 2))
+		rotate(calc(atan2(var(--height), var(--width)) * -1));
+}
+
+.bar:nth-child(2).barActive {
+	opacity: 0;
+}
+
+.bar:nth-child(3).barActive {
+	transform:
+		translateY(calc(var(--height) / 7 * -2))
+		rotate(calc(atan2(var(--height), var(--width))));
+}
