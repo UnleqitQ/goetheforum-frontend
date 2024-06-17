@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import '@fortawesome/fontawesome-svg-core/styles.css';
 import {createHashRouter, RouterProvider} from "react-router-dom";
 import {APIOptions, PrimeReactProvider} from "primereact/api";
 import {PageShell} from "./pages/shell/PageShell.tsx";
