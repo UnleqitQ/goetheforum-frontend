@@ -3,11 +3,18 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import {createHashRouter, RouterProvider} from "react-router-dom";
 import {APIOptions, PrimeReactProvider} from "primereact/api";
+import {PageShell} from "./pages/shell/PageShell.tsx";
 
 const router = createHashRouter([
 	{
 		path: '/',
-		element: <div>Home</div>
+		element: <PageShell />,
+		children: [
+			{
+				path: '/',
+				element: <div>Home</div>
+			}
+		]
 	}
 ], {});
 

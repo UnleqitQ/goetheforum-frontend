@@ -1,0 +1,41 @@
+.root {
+	--left-size: 2fr;
+	--right-size: 1fr;
+	display: grid;
+	grid-template-areas: "header header header"
+		"sidebar-left content sidebar-right"
+		"footer footer footer";
+	grid-template-columns: var(--left-size) 7fr var(--right-size);
+	grid-template-rows: auto 1fr auto;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+}
+
+.header {
+	grid-area: header;
+	overflow: hidden;
+}
+
+.sidebarLeft {
+	grid-area: sidebar-left;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.content {
+	grid-area: content;
+	overflow: auto;
+}
+
+.sidebarRight {
+	grid-area: sidebar-right;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.footer {
+	grid-area: footer;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
