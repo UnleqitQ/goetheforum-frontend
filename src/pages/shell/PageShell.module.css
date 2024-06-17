@@ -28,6 +28,8 @@
 .content {
 	grid-area: content;
 	overflow: auto;
+	
+	padding: 1rem;
 }
 
 .sidebarRight {
