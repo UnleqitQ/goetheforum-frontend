@@ -18,6 +18,10 @@ const router = createHashRouter([
 				element: <div>Home</div>
 			}
 		]
+	},
+	{
+		path: '/login',
+		lazy: () => import('./pages/login/LoginPage.tsx').then((module) => ({Component: module.LoginPage})),
 	}
 ], {});
 
