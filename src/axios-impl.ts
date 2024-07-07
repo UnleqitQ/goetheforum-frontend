@@ -1,9 +1,11 @@
 import {API_URL} from "./consts.ts";
-import axios from "axios";
+import ax from 'axios';
 
-export default axios.create({
+const axios = ax.create({
 	baseURL: API_URL,
 	headers: {
 		"Content-type": "application/json"
 	},
 });
+
+export default axios;
