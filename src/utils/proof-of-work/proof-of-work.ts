@@ -37,19 +37,28 @@ export class ProofOfWorkHandler {
 	 * The worker's status
 	 */
 	private _status: WorkerStatus;
+	/**
+	 * The callback to call when the proof of work is successful
+	 */
+	private _onSuccess: (nonce: number) => void;
 	
 	/**
 	 * Creates a new proof of work worker
 	 * @param difficulty The number of leading zeroes the hash of the data must have in hexadecimal form
 	 * @param data The base data to hash
+	 * @param onSuccess The callback to call when the proof of work is successful
 	 */
-	constructor(difficulty: number, data: string) {
+	constructor(difficulty: number, data: string, onSuccess: (nonce: number) => void) {
+		console.log('Creating worker');
 		this._worker = new PowWorker();
 		this._difficulty = difficulty;
 		this._data = data;
 		this._nonce = 0;
 		this._hashes = 0;
 		this._status = 'uninitialized';
+		this._onSuccess = onSuccess;
+		
+		this._worker.onmessage = this.onMessage.bind(this);
 	}
 	
 	private postMessage(message: MasterMessage) {
@@ -58,6 +67,7 @@ export class ProofOfWorkHandler {
 	
 	private onMessage(event: MessageEvent<WorkerMessage>) {
 		const message = event.data;
+		console.log('Received message:', message);
 		if (message.type === 'status') {
 			this._status = message.status;
 			this._startTime = message.startTime;
@@ -68,6 +78,7 @@ export class ProofOfWorkHandler {
 			this._status = 'completed';
 			this._endTime = message.endTime;
 			this._nonce = message.nonce;
+			this._onSuccess(message.nonce);
 		}
 	}
 	

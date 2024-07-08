@@ -3,7 +3,7 @@
  * to verify a user is not a bot.
  */
 
-import {checkProofOfWork, convertNonce, estimateAmountOfWork} from './pow-utils';
+import {checkProofOfWork, convertNonce} from './pow-utils';
 import {WorkerMessage, MasterMessage, WorkerStatus} from './pow-message.ts';
 
 let nonce = 0;
@@ -63,8 +63,11 @@ const handleMessage = (event: MessageEvent<MasterMessage>) => {
 
 addEventListener('message', handleMessage);
 
-const calculateProofOfWork = (data: string, difficulty: number) => {
+const calculateProofOfWork = async (data: string, difficulty: number) => {
 	while (status === 'running') {
+		if (nonce % 20000 === 0) {
+			sendStatus();
+		}
 		const dataWithNonce = data + convertNonce(nonce);
 		if (checkProofOfWork(dataWithNonce, difficulty)) {
 			status = 'completed';
@@ -84,7 +87,9 @@ const waitInitialData = async () => {
 
 waitInitialData().then(() => {
 	if (status === 'running') {
-		calculateProofOfWork(baseData ?? '', difficulty ?? 0);
+		setTimeout(async () => {
+			await calculateProofOfWork(baseData ?? '', difficulty ?? 0);
+		}, 0);
 	}
 });
 
