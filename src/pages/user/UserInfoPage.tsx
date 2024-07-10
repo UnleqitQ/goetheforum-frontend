@@ -8,7 +8,7 @@ import {UserInfoData} from '../../types/UserInfoData.ts';
 import {useNavigate, useParams} from 'react-router-dom';
 import {Button} from 'primereact/button';
 import {useToast} from '../../context/ToastProvider.tsx';
-import useRefreshToken from '../../hooks/refreshToken.tsx';
+import useRefreshToken from '../../hooks/refreshToken.ts';
 
 export const UserInfoPage: React.FC = () => {
 	const [cookies] = useCookies(['access_token']);

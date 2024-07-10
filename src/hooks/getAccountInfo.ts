@@ -2,7 +2,7 @@ import React from 'react';
 import {useCookies} from 'react-cookie';
 import {ErrorResponse} from '../types/ErrorResponse.ts';
 import axios from '../axios-impl.ts';
-import useRefreshToken from './refreshToken.tsx';
+import useRefreshToken from './refreshToken.ts';
 import {UserData} from '../types/UserData.ts';
 import {SessionData} from '../types/SessionData.ts';
 import {useNavigate} from 'react-router-dom';

@@ -2,7 +2,7 @@ import React from 'react';
 import {Burger} from '../../components/burger/Burger.tsx';
 import {Button} from 'primereact/button';
 import {useNavigate} from 'react-router-dom';
-import useGetAccountInfo from '../../hooks/getAccountInfo.tsx';
+import useGetAccountInfo from '../../hooks/getAccountInfo.ts';
 import {Skeleton} from 'primereact/skeleton';
 import {UserData} from '../../types/UserData.ts';
 import {TieredMenu} from 'primereact/tieredmenu';

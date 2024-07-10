@@ -31,7 +31,7 @@ export const ProofOfWork: React.FC<ProofOfWorkProps> = (props) => {
 	
 	React.useEffect(() => {
 		setProgress(Math.min(1, hashes / estimatedRequiredHashes));
-	}, [hashes]);
+	}, [estimatedRequiredHashes, hashes]);
 	
 	const refresh = React.useCallback(() => {
 		setHashes(handler.hashes!);
