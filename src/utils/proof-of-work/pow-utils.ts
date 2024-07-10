@@ -1,25 +1,30 @@
 import {SHA512} from '@noble/hashes/sha512';
-import {bytesToHex} from '@noble/hashes/utils';
 
 /**
  * Hashes the given data using SHA-512
  * @param data The data to hash
- * @returns The hash of the data as a hex string
+ * @returns The hash of the data as a byte array
  */
-export const hash = (data: string): string => {
-	return bytesToHex(new SHA512().update(data).digest());
+export const hash = (data: string): Uint8Array => {
+	return new SHA512().update(data).digest();
 };
 
 /**
  * Checks if the given data satisfies the proof of work condition
  * @param data The data to check
- * @param difficulty The number of leading zeroes the hash of the data must have in hexadecimal form
+ * @param difficulty The number of leading zeroes the hash of the data must have in binary form
  * @returns True if the hash of the data has the required number of leading zeroes, false otherwise
  */
 export const checkProofOfWork = (data: string, difficulty: number): boolean => {
-	const prefix = '0'.repeat(difficulty);
 	const hashValue = hash(data);
-	return hashValue.startsWith(prefix);
+	for (let i = 0; i < difficulty; i++) {
+		const byte = i >> 3;
+		const bit = i & 0b111;
+		if ((hashValue[byte] & (1 << (7 - bit))) !== 0) {
+			return false;
+		}
+	}
+	return true;
 };
 
 /**
@@ -61,9 +66,9 @@ export const calculateSpeed = (data: string, duration: number): number => {
  */
 export const estimateAmountOfWork = (difficulty: number): number => {
 	// One level of difficulty adds 1 leading zero needed
-	// As this is a hex string, 4 bits are needed for each zero
-	// Therefore, the amount of work is 2^4 = 16 times more for each level
-	return 16 ** difficulty;
+	// As this check is done in binary, 1 bit is needed for each zero
+	// Therefore, the amount of work is 2 times more for each level
+	return 2 ** difficulty;
 }
 
 /**
@@ -74,6 +79,6 @@ export const estimateAmountOfWork = (difficulty: number): number => {
  */
 export const calculateDifficulty = (speed: number, targetDuration: number): number => {
 	const amountOfWork = speed * targetDuration / 1000;
-	const difficulty = Math.log2(amountOfWork) / 4;
+	const difficulty = Math.log2(amountOfWork);
 	return Math.ceil(difficulty);
 }
